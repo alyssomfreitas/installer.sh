@@ -8,7 +8,7 @@ show_menu() {
     echo "Selecione a aplicação para instalar:"
     echo "1) Aplicação Evolution API"
     echo "2) Aplicação N8N"
-    echo "3) Aplicação 3"
+    echo "3) Aplicação Update N8N"
     echo "0) Sair"
 }
 
@@ -27,7 +27,7 @@ while true; do
             ;;
         3)
             echo "Instalando Aplicação 3..."
-            curl -s "${BASE_URL}/app3.sh" | bash
+            curl -s "${BASE_URL}/updaten8n.sh" | bash
             ;;
         0)
             echo "Saindo..."
