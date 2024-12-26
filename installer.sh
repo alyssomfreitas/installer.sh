@@ -3,7 +3,7 @@
 # URL base do repositório
 BASE_URL="https://raw.githubusercontent.com/alyssomfreitas/auto-installer/main/scripts"
 
-# Função para exibir o menu
+# Função para exibir o menu.
 show_menu() {
     echo "Selecione a aplicação para instalar:"
     echo "1) Aplicação Evolution API"
