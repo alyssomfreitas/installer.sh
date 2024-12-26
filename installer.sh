@@ -6,7 +6,7 @@ BASE_URL="https://raw.githubusercontent.com/alyssomfreitas/auto-installer/main/s
 # Função para exibir o menu
 show_menu() {
     echo "Selecione a aplicação para instalar:"
-    echo "1) Aplicação 1"
+    echo "1) Aplicação Evolution API"
     echo "2) Aplicação 2"
     echo "3) Aplicação 3"
     echo "0) Sair"
@@ -18,8 +18,8 @@ while true; do
     read -p "Digite sua escolha: " CHOICE
     case $CHOICE in
         1)
-            echo "Instalando Aplicação 1..."
-            curl -s "${BASE_URL}/app1.sh" | bash
+            echo "Instalando Aplicação Evolution Api..."
+            curl -s "${BASE_URL}/evolutionapi.sh" | bash
             ;;
         2)
             echo "Instalando Aplicação 2..."
