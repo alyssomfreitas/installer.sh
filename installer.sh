@@ -7,7 +7,7 @@ BASE_URL="https://raw.githubusercontent.com/alyssomfreitas/auto-installer/main/s
 show_menu() {
     echo "Selecione a aplicação para instalar:"
     echo "1) Aplicação Evolution API"
-    echo "2) Aplicação 2"
+    echo "2) Aplicação N8N"
     echo "3) Aplicação 3"
     echo "0) Sair"
 }
@@ -22,8 +22,8 @@ while true; do
             curl -s "${BASE_URL}/evolutionapi.sh" | bash
             ;;
         2)
-            echo "Instalando Aplicação 2..."
-            curl -s "${BASE_URL}/app2.sh" | bash
+            echo "Instalando Aplicação N8N..."
+            curl -s "${BASE_URL}/n8n.sh" | bash
             ;;
         3)
             echo "Instalando Aplicação 3..."
