@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "Iniciando a instalação da Aplicação Update N8N..."
-# Atualizador do N8N em Docker com Barra de Progresso
+# Atualizador do N8N em Docker com Barra de Progresso e Instalação do Redis
 # Autor: Alysson Freitas
 # Versão: Atualizado
 
@@ -37,6 +37,27 @@ fi) && progress_bar 1 $total_substeps
 echo -e "\nDocker verificado com sucesso!"
 sleep 1
 
+# Instalar e configurar o Redis
+echo "Instalando e configurando o Redis..."
+total_substeps=5
+progress_bar 0 $total_substeps
+
+(sudo apt update &> /dev/null) && progress_bar 1 $total_substeps
+(sudo apt install -y redis-server &> /dev/null) && progress_bar 2 $total_substeps
+
+# Configurar o Redis para aceitar conexões externas (opcional)
+(sudo sed -i 's/bind 127.0.0.1/bind 0.0.0.0/' /etc/redis/redis.conf &> /dev/null) && progress_bar 3 $total_substeps
+
+# Definir uma senha para o Redis (opcional)
+REDIS_PASSWORD="ou784339"  # Altere para a senha desejada
+(sudo sed -i "s/# requirepass .*/requirepass $REDIS_PASSWORD/" /etc/redis/redis.conf &> /dev/null) && progress_bar 4 $total_substeps
+
+# Reiniciar o Redis para aplicar as configurações
+(sudo systemctl restart redis && sudo systemctl enable redis &> /dev/null) && progress_bar 5 $total_substeps
+
+echo -e "\nRedis instalado e configurado com sucesso!"
+sleep 1
+
 # Parar e remover contêiner antigo
 echo "Parando e removendo contêiner antigo..."
 total_substeps=2
@@ -67,6 +88,9 @@ host=$(hostname -I | awk '{print $1}')
 (docker run -d --restart unless-stopped --name n8n \
     -e N8N_SECURE_COOKIE=false \
     -e WEBHOOK_URL=https://n8n.aprovtec.com.br \
+    -e QUEUE_BULL_REDIS_HOST=127.0.0.1 \
+    -e QUEUE_BULL_REDIS_PORT=6379 \
+    -e QUEUE_BULL_REDIS_PASSWORD=$REDIS_PASSWORD \
     -p 5678:5678 \
     -v ~/.n8n:/home/node/.n8n \
     n8nio/n8n &> /dev/null) && progress_bar 1 $total_substeps
